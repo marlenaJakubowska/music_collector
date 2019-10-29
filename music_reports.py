@@ -1,7 +1,11 @@
 # CODECOOL MUSIC LIBRARY
 
 import display
-# albums_dict = {artist name, album name, release year, genre, length}
+from operator import itemgetter, attrgetter
+
+
+#  data = {"artist name", "album name", "release year", "genre", "length"}
+# genre = "rock"
 
 
 def read_albums(file_path):
@@ -14,13 +18,21 @@ def read_albums(file_path):
         splitted_line = line.strip().split(',')
         splitted_line[2] = int(splitted_line[2])
         data.append(splitted_line)
+
+    def find_albums_by_genre(genre):
+        if genre:
+            for album in data:
+                if genre in album[3]:   
+                    print(album)
+
+    find_albums_by_genre(input("What type of genre do you want to find? ")) 
         
     return data
+
 
 def main():
     path = 'text_albums_data.txt'
     albums = read_albums(path)
-    display.print_table(albums)
-
+    # display.print_table(albums)
 
 main()

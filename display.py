@@ -5,3 +5,5 @@ def print_table(albums):
     for album in albums:
         print(album)
 
+    
+
