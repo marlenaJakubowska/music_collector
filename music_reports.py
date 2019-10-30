@@ -133,7 +133,7 @@ def main():
             filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_name)
 
-        elif option == "q" or "Q":
+        elif option == "q" or option == "Q":
             is_running = False
 
 
