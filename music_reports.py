@@ -15,12 +15,13 @@ def choose_option():
         "5: I want to find all albums created by given artist",
         "6: I want to find album by album name",
         "7: I want to get full report in form of set of given statistics",
-        "q: Quit"
+        "add: Add new album",        
+        "q: Quit",
     ]
     for option in available_options:
         print(option)
-    user_option = input("Please enter option: ")
-    return user_option
+    user_option = input("\nPlease enter option: ")
+    return user_option.lower()
 
 
 def read_albums(file_path):
@@ -101,11 +102,38 @@ def find_albums_by_name(name, data):
     return filtered_albums
 
 
+def add_new_album(file_path):
+    add_artist = input("Enter an artist: ")
+    add_album = input("Enter an album name: ")
+    incorrect_year = True
+    while incorrect_year:
+        try:
+            add_year = int(input("Enter release year: "))
+            if type(add_year) == int:
+                incorrect_year = False
+        except ValueError:
+            print("Wrong value: input only digits")
+    add_genre = input("Enter genre: ")
+    incorrect_length = True
+    while incorrect_length:
+        try:
+            add_length = input("Enter album length: ")
+            split_length = add_length.split(':')
+            if type(int(split_length[0])) == int and type(int(split_length[1])) == int and len(split_length[1]) == 2 and int(split_length[1]) < 60:
+                incorrect_length = False
+        except:
+            print("Wrong time syntax")
+
+    with open(file_path, "a") as file:
+        file.write(f"{add_artist},{add_album},{add_year},{add_genre},{add_length}\n")
+
+    print(f"Added new album: {add_artist} | {add_album} | {add_year} | {add_genre} | {add_length}\n")
+
+
 def main():
     # todo: user should be able to stay in program after choosing option
     path = 'text_albums_data.txt'
     albums = read_albums(path)
-    # option = choose_option()
     is_running = True
 
     while is_running:
@@ -133,7 +161,10 @@ def main():
             filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_name)
 
-        elif option == "q" or option == "Q":
+        elif option == "add":
+            add_album = add_new_album(path)
+
+        elif option == "q":
             is_running = False
 
 
