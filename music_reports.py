@@ -147,7 +147,17 @@ def find_shortest_longest_time(data):
 
 def find_album_by_length(data, shortest_time, longest_time):
     length = input("Enter S for shortest or L for longest album: ")
-    length = length.upper()
+    incorrect_length = True
+
+    while incorrect_length:
+        length = length.upper()
+        if length == "S":
+            incorrect_length = False
+        elif length == "L":
+            incorrect_length = False
+        else:
+            length = input("Enter S for shortest or L for longest album: ")
+
     shortest_album = []
     longest_album = []
 
@@ -165,8 +175,6 @@ def find_album_by_length(data, shortest_time, longest_time):
             if longest_time_in_minutes in album:
                 longest_album.append(album)
         return longest_album
-    else:
-        length = input("Enter S for shortest or L for longest album: ")
 
 
 def time_to_seconds(time):
