@@ -145,7 +145,7 @@ def find_shortest_longest_time(data):
     return shortest_time, longest_time
 
 
-def find_album_by_length(data, shortest_time, longest_time):
+def find_shortest_or_longest_album(data):
     length = input("Enter S for shortest or L for longest album: ")
     incorrect_length = True
 
@@ -158,24 +158,32 @@ def find_album_by_length(data, shortest_time, longest_time):
         else:
             length = input("Enter S for shortest or L for longest album: ")
 
-    shortest_album = []
+    if length == "S":
+        return find_shortest_album(data)
+    elif length == "L":
+        return find_longest_album(data)
+
+
+def find_longest_album(data):
+    longest_time = find_shortest_longest_time(data)[1]
+    longest_time_in_minutes = f"{math.floor(longest_time/60)}:{longest_time%60}"
     longest_album = []
 
-    find_shortest_longest_time(data)
+    for album in data:
+        if longest_time_in_minutes in album:
+            longest_album.append(album)
+    return longest_album
+
+
+def find_shortest_album(data):
+    shortest_time = find_shortest_longest_time(data)[0]
     shortest_time_in_minutes = f"{math.floor(shortest_time/60)}:{shortest_time%60}"
-    longest_time_in_minutes = f"{math.floor(longest_time/60)}:{longest_time%60}"
+    shortest_album = []
 
-    if length == "S":
-        for album in data:
-            if shortest_time_in_minutes in album:
-                shortest_album.append(album)
-        return shortest_album
-    elif length == "L":
-        for album in data:
-            if longest_time_in_minutes in album:
-                longest_album.append(album)
-        return longest_album
-
+    for album in data:
+        if shortest_time_in_minutes in album:
+            shortest_album.append(album)
+    return shortest_album
 
 def time_to_seconds(time):
     time = time.split(":")
@@ -219,6 +227,45 @@ def find_newest_album(data):
     return newest_album
 
 
+def print_statistics(data):
+
+    longest_albums = find_longest_album(data)
+    longest_albums_to_print = ""
+    for album in longest_albums:
+        longest_albums_to_print += str(album[1]) + ", "
+    longest_albums_to_print += " Length: " + str(longest_albums[0][-1])
+
+    shortest_albums = find_shortest_album(data)
+    shortest_albums_to_print = ""
+    for album in shortest_albums:
+        shortest_albums_to_print += str(album[1]) + ", "
+    shortest_albums_to_print += " Length: " + str(shortest_albums[0][-1])
+    
+    oldest_albums = find_oldest_album(data)
+    oldest_albums_to_print = ""
+    for album in oldest_albums:
+        oldest_albums_to_print += str(album[1]) + ", "
+    oldest_albums_to_print += " Year: " + str(oldest_albums[0][2])
+    
+    youngest_albums = find_newest_album(data)
+    youngest_albums_to_print = ""
+    for album in youngest_albums:
+        youngest_albums_to_print += str(album[1]) + ", "
+    youngest_albums_to_print += " Year: " + str(youngest_albums[0][2])
+
+    all_albums_count = str(len(data))
+    additional_info = "to_be_implemented"
+
+    print()
+    print("Longest album: " + longest_albums_to_print)
+    print("Shortest album: " + shortest_albums_to_print)
+    print("Oldest album: " + oldest_albums_to_print)
+    print("Youngest album: " + youngest_albums_to_print)
+    print("All albums count: " + all_albums_count)
+    print("Additional info: " + additional_info)
+    print()
+
+
 def main():
     path = 'text_albums_data.txt'
     albums = read_albums(path)
@@ -230,35 +277,27 @@ def main():
 
         if option == "1":
             display.print_table(albums)
-
         elif option == "2":
             filtered_albums_by_genre = find_albums_by_genre(input("What type of genre do you want to find? "), albums)
             display.print_table(filtered_albums_by_genre)
-
         elif option == "3":
             from_time, to_time = input_time_range()
             filtered_albums_by_time_range = find_albums_by_time_range(
                 albums, from_time, to_time)
             display.print_table(filtered_albums_by_time_range)
         elif option == "4":
-            shortest_time, longest_time = find_shortest_longest_time(albums)
-            wanted_album = find_album_by_length(albums, shortest_time, longest_time)
+            wanted_album = find_shortest_or_longest_album(albums)
             display.print_table(wanted_album)
         elif option == "5":
             filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_artist)
-
         elif option == "6":
             filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_name)
-
         elif option == "add":
             add_album = add_new_album(path)
-
-        # elif option == "7":
-            # filtered_albums_by_oldest = find_oldest_album(albums)
-            # display.print_table(filtered_albums_by_oldest)
-
+        elif option == "7":
+            print_statistics(albums)
         elif option == "q":
             is_running = False
 

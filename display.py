@@ -2,7 +2,6 @@
 
 # print table
 
-
 def print_table(albums):
     print("-" * 101 + "\n" + " | ".join(("artist name".center(30), "album name".center(30), "year".center(4), "genre".center(18), "length".center(6))) + "\n" + "-" * 101)
 
@@ -11,6 +10,7 @@ def print_table(albums):
     print('-' * 101)
 
 # def print_full_report(albums):
+
 
 # album not found
     if len(albums) == 0:
