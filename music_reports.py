@@ -84,6 +84,22 @@ def input_time_range():
     return from_time, to_time
 
 
+def find_albums_by_artist(artist, data):
+    filtered_albums = []
+    for album in data:
+        if artist in album[0]:
+            filtered_albums.append(album)
+    return filtered_albums
+
+
+def find_albums_by_name(name, data):
+    filtered_albums = []
+    for album in data:
+        if name in album[1]:
+            filtered_albums.append(album)
+    return filtered_albums
+
+
 def main():
     # todo: user should be able to stay in program after choosing option
     path = 'text_albums_data.txt'
@@ -104,6 +120,12 @@ def main():
             albums, from_time, to_time)
 
         display.print_table(filtered_albums_by_time_range)
+    elif option == "5":
+        filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
+        display.print_table(filtered_albums_by_artist)
+    elif option == "6":
+        filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
+        display.print_table(filtered_albums_by_name)
 
 
 main()
