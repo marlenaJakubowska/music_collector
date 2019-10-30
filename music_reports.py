@@ -15,7 +15,7 @@ def choose_option():
         "5: I want to find all albums created by given artist",
         "6: I want to find album by album name",
         "7: I want to get full report in form of set of given statistics",
-        "add: Add new album",        
+        "add: Add new album",
         "q: Quit",
     ]
     for option in available_options:
@@ -128,6 +128,8 @@ def add_new_album(file_path):
         file.write(f"{add_artist},{add_album},{add_year},{add_genre},{add_length}\n")
 
     print(f"Added new album: {add_artist} | {add_album} | {add_year} | {add_genre} | {add_length}\n")
+
+
 def find_shortest_longest_time(data):
 
     list_of_length = []
@@ -143,7 +145,7 @@ def find_shortest_longest_time(data):
     return shortest_time, longest_time
 
 
-def find_album_by_length(data, shortest_time, longest_time): 
+def find_album_by_length(data, shortest_time, longest_time):
     length = input("Enter S for shortest or L for longest album: ")
     length = length.upper()
     shortest_album = []
@@ -152,7 +154,7 @@ def find_album_by_length(data, shortest_time, longest_time):
     find_shortest_longest_time(data)
     shortest_time_in_minutes = f"{math.floor(shortest_time/60)}:{shortest_time%60}"
     longest_time_in_minutes = f"{math.floor(longest_time/60)}:{longest_time%60}"
- 
+
     if length == "S":
         for album in data:
             if shortest_time_in_minutes in album:
@@ -174,6 +176,39 @@ def time_to_seconds(time):
     time_in_seconds = minutes_to_seconds + seconds
 
     return time_in_seconds
+
+
+def years_list(data):
+    list_years = []
+    for year in data:
+        list_years.append(int(year[2]))
+    return list_years
+
+
+def find_oldest_album(data):
+    min_year = []
+    oldest_album = []
+    list_years = years_list(data)
+    oldest = min(list_years)
+    for index, year in enumerate(list_years):
+        if oldest == year:
+            min_year.append(index)
+    for year in min_year:
+        oldest_album.append(data[year])
+    return oldest_album
+
+
+def find_newest_album(data):
+    max_year = []
+    newest_album = []
+    list_years = years_list(data)
+    newest = max(list_years)
+    for index, year in enumerate(list_years):
+        if newest == year:
+            max_year.append(index)
+    for year in max_year:
+        newest_album.append(data[year])
+    return newest_album
 
 
 def main():
@@ -212,10 +247,12 @@ def main():
         elif option == "add":
             add_album = add_new_album(path)
 
+        # elif option == "7":
+            # filtered_albums_by_oldest = find_oldest_album(albums)
+            # display.print_table(filtered_albums_by_oldest)
+
         elif option == "q":
             is_running = False
-   
-   
 
 
 main()
