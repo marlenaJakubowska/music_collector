@@ -15,6 +15,7 @@ def choose_option():
         "5: I want to find all albums created by given artist",
         "6: I want to find album by album name",
         "7: I want to get full report in form of set of given statistics",
+        "q: Quit"
     ]
     for option in available_options:
         print(option)
@@ -104,26 +105,36 @@ def main():
     # todo: user should be able to stay in program after choosing option
     path = 'text_albums_data.txt'
     albums = read_albums(path)
+    # option = choose_option()
+    is_running = True
 
-    option = choose_option()
+    while is_running:
 
-    if option == "1":
-        display.print_table(albums)
-    elif option == "2":
-        filtered_albums_by_genre = find_albums_by_genre(
-            input("What type of genre do you want to find? "), albums)
-        display.print_table(filtered_albums_by_genre)
-    elif option == "3":
-        from_time, to_time = input_time_range()
-        filtered_albums_by_time_range = find_albums_by_time_range(
-            albums, from_time, to_time)
-        display.print_table(filtered_albums_by_time_range)
-    elif option == "5":
-        filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
-        display.print_table(filtered_albums_by_artist)
-    elif option == "6":
-        filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
-        display.print_table(filtered_albums_by_name)
+        option = choose_option()
+
+        if option == "1":
+            display.print_table(albums)
+
+        elif option == "2":
+            filtered_albums_by_genre = find_albums_by_genre(input("What type of genre do you want to find? "), albums)
+            display.print_table(filtered_albums_by_genre)
+
+        elif option == "3":
+            from_time, to_time = input_time_range()
+            filtered_albums_by_time_range = find_albums_by_time_range(
+                albums, from_time, to_time)
+            display.print_table(filtered_albums_by_time_range)
+
+        elif option == "5":
+            filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
+            display.print_table(filtered_albums_by_artist)
+
+        elif option == "6":
+            filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
+            display.print_table(filtered_albums_by_name)
+
+        elif option == "q" or "Q":
+            is_running = False
 
 
 main()
