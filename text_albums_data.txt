@@ -9,3 +9,4 @@ Monika Brodka,Granada,2010,pop,37:42
 David Bowie,Low,1977,rock,38:26
 rock,rock,966,pop,13:37
 Massive Attack,Blue Lines,1991,hip hop,45:02
+The Cure,Bloodflowers,2000,New Wave,64:29

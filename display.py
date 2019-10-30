@@ -10,6 +10,7 @@ def print_table(albums):
         print(' | '.join((artist_name.ljust(30), album_name.ljust(30), str(release_year).ljust(4), genre.ljust(18), length.ljust(6))))
     print('-' * 101)
 
+# def print_full_report(albums):
 
 # album not found
     if len(albums) == 0:

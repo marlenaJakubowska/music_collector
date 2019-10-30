@@ -117,7 +117,7 @@ def add_new_album(file_path):
     incorrect_length = True
     while incorrect_length:
         try:
-            add_length = input("Enter album length: ")
+            add_length = input("Enter album length in 00:00 format: ")
             split_length = add_length.split(':')
             if type(int(split_length[0])) == int and type(int(split_length[1])) == int and len(split_length[1]) == 2 and int(split_length[1]) < 60:
                 incorrect_length = False
