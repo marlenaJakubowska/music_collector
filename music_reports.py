@@ -114,11 +114,9 @@ def main():
             input("What type of genre do you want to find? "), albums)
         display.print_table(filtered_albums_by_genre)
     elif option == "3":
-
         from_time, to_time = input_time_range()
         filtered_albums_by_time_range = find_albums_by_time_range(
             albums, from_time, to_time)
-
         display.print_table(filtered_albums_by_time_range)
     elif option == "5":
         filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
