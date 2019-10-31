@@ -6,22 +6,22 @@ import display
 # genre = "rock"
 
 
-def choose_option():
-    available_options = [
-        "1: I want to view all imported albums",
-        "2: I want to find all albums by genre",
-        "3: I want to find all albums from given time range",
-        "4: I want to find shortest/longest album",
-        "5: I want to find all albums created by given artist",
-        "6: I want to find album by album name",
-        "7: I want to get full report in form of set of given statistics",
-        "add: Add new album",
-        "q: Quit",
-    ]
-    for option in available_options:
-        print(option)
-    user_option = input("\nPlease enter option: ")
-    return user_option.lower()
+# def choose_option():
+#     available_options = [
+#         "1: I want to view all imported albums",
+#         "2: I want to find all albums by genre",
+#         "3: I want to find all albums from given time range",
+#         "4: I want to find shortest/longest album",
+#         "5: I want to find all albums created by given artist",
+#         "6: I want to find album by album name",
+#         "7: I want to get full report in form of set of given statistics",
+#         "add: Add new album",
+#         "q: Quit",
+#     ]
+#     for option in available_options:
+#         print(option)
+#     user_option = input("\nPlease enter option: ")
+#     return user_option.lower()
 
 
 def read_albums(file_path):
@@ -97,7 +97,7 @@ def find_albums_by_artist(artist, data):
 def find_albums_by_name(name, data):
     filtered_albums = []
     for album in data:
-        if name in album[1]:
+        if name.lower() in album[1].lower():
             filtered_albums.append(album)
     return filtered_albums
 
@@ -285,7 +285,7 @@ def main():
 
     while is_running:
 
-        option = choose_option()
+        option = display.choose_option()
 
         if option == "1":
             display.print_table(albums)

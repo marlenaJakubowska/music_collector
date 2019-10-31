@@ -9,3 +9,21 @@ def print_table(albums):
 # album not found
     if len(albums) == 0:
         print("No albums found")
+
+
+def choose_option():
+    available_options = [
+        "1: I want to view all imported albums",
+        "2: I want to find all albums by genre",
+        "3: I want to find all albums from given time range",
+        "4: I want to find shortest/longest album",
+        "5: I want to find all albums created by given artist",
+        "6: I want to find album by album name",
+        "7: I want to get full report in form of set of given statistics",
+        "add: Add new album",
+        "q: Quit",
+    ]
+    for option in available_options:
+        print(option)
+    user_option = input("\nPlease enter option: ")
+    return user_option.lower()
