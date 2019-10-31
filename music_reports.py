@@ -109,25 +109,36 @@ def add_new_album(file_path):
     while incorrect_year:
         try:
             add_year = int(input("Enter release year: "))
-            if type(add_year) == int:
+            if isinstance(add_year, int):
                 incorrect_year = False
         except ValueError:
             print("Wrong value: input only digits")
     add_genre = input("Enter genre: ")
     incorrect_length = True
     while incorrect_length:
-        try:
-            add_length = input("Enter album length in 00:00 format: ")
-            split_length = add_length.split(':')
-            if type(int(split_length[0])) == int and type(int(split_length[1])) == int and len(split_length[1]) == 2 and int(split_length[1]) < 60:
-                incorrect_length = False
-        except:
-            print("Wrong time syntax")
+        add_length = input("Enter album length in 00:00 format: ")
 
+        if ':' in add_length:
+            try:
+                split_length = add_length.split(':')
+                if isinstance(int(split_length[0]), int) and isinstance(int(
+                        split_length[1]), int) and len(split_length[1]) == 2 and int(split_length[1]) < 60:
+                    incorrect_length = False
+            except BaseException:
+                print("Wrong time syntax")
+        else:
+            try:
+                if isinstance(int(add_length), int):
+                    add_length = add_length + ":00"
+                    incorrect_length = False
+            except BaseException:
+                print("Wrong time syntax")
     with open(file_path, "a") as file:
-        file.write(f"{add_artist},{add_album},{add_year},{add_genre},{add_length}\n")
+        file.write(
+            f"{add_artist},{add_album},{add_year},{add_genre},{add_length}\n")
 
-    print(f"Added new album: {add_artist} | {add_album} | {add_year} | {add_genre} | {add_length}\n")
+    print(
+        f"Added new album: {add_artist} | {add_album} | {add_year} | {add_genre} | {add_length}\n")
 
 
 def find_shortest_longest_time(data):
@@ -279,7 +290,8 @@ def main():
         if option == "1":
             display.print_table(albums)
         elif option == "2":
-            filtered_albums_by_genre = find_albums_by_genre(input("What type of genre do you want to find? "), albums)
+            filtered_albums_by_genre = find_albums_by_genre(
+                input("What type of genre do you want to find? "), albums)
             display.print_table(filtered_albums_by_genre)
         elif option == "3":
             from_time, to_time = input_time_range()
@@ -290,10 +302,12 @@ def main():
             wanted_album = find_shortest_or_longest_album(albums)
             display.print_table(wanted_album)
         elif option == "5":
-            filtered_albums_by_artist = find_albums_by_artist(input("Which artist do you want to find? ").title(), albums)
+            filtered_albums_by_artist = find_albums_by_artist(
+                input("Which artist do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_artist)
         elif option == "6":
-            filtered_albums_by_name = find_albums_by_name(input("Which album do you want to find? ").title(), albums)
+            filtered_albums_by_name = find_albums_by_name(
+                input("Which album do you want to find? ").title(), albums)
             display.print_table(filtered_albums_by_name)
         elif option == "add":
             add_album = add_new_album(path)
